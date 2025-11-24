@@ -7,7 +7,7 @@ import './EmployeeListPage.css';
 import Sidebar from './layout/Sidebar';
 import Navbar from './layout/Navbar';
 import { LuEye, LuPencil, LuTrash2 } from 'react-icons/lu';
-import { FiSearch } from 'react-icons/fi';     
+import { FiSearch } from 'react-icons/fi';
 import { FiPlusCircle } from "react-icons/fi";
 
 const API_URL = 'http://localhost:5000/api/employees';
@@ -82,48 +82,68 @@ function EmployeeListPage() {
         <header className="topbar">
           <h1 className="page-title">Employee</h1>
           <div className="topbar-right">
-<div className="search-box">
-  <FiSearch className="search-icon-ui" />
-  <input
-    className="search-input-ui"
-    type="text"
-    placeholder="Search"
-    value={search}
-    onChange={handleSearchChange}
-  />
-</div>
+            <div className="search-box">
+              <FiSearch className="search-icon-ui" />
+              <input
+                className="search-input-ui"
+                type="text"
+                placeholder="Search"
+                value={search}
+                onChange={handleSearchChange}
+              />
+            </div>
 
-            <button className="primary-btn" onClick={() => navigate('/employees/new')}>
-  <FiPlusCircle size={20} className="plus-icon" />
-  Add New Employee
-</button>
+            <button
+              className="primary-btn"
+              onClick={() => navigate('/employees/new')}
+            >
+              <FiPlusCircle size={20} className="plus-icon" />
+              Add New Employee
+            </button>
           </div>
         </header>
 
+        {/* Table always visible */}
         <section className="card">
-          {loading && <div className="center-message">Loading...</div>}
-          {error && <div className="error-message">{error}</div>}
 
-          {!loading && !employees.length && !error && (
-            <div className="center-message">No records found</div>
+          {error && (
+            <div className="error-message">{error}</div>
           )}
 
-          {!loading && !!employees.length && (
-            <table className="employee-table">
-              <thead>
+          <table className="employee-table">
+            <thead>
+              <tr>
+                <th>Employee Name</th>
+                <th>Employee ID</th>
+                <th>Department</th>
+                <th>Designation</th>
+                <th>Project</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {loading && (
                 <tr>
-                  <th>Employee Name</th>
-                  <th>Employee ID</th>
-                  <th>Department</th>
-                  <th>Designation</th>
-                  <th>Project</th>
-                  <th>Type</th>
-                  <th>Status</th>
-                  <th>Action</th>
+                  <td colSpan="8" className="center-message">
+                    Loading...
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {employees.map((emp) => (
+              )}
+
+              {!loading && employees.length === 0 && !error && (
+                <tr>
+                  <td colSpan="8" className="center-message">
+                    No records found
+                  </td>
+                </tr>
+              )}
+
+              {!loading &&
+                employees.length > 0 &&
+                employees.map((emp) => (
                   <tr key={emp.id}>
                     <td>
                       <div className="employee-name-cell">
@@ -151,6 +171,7 @@ function EmployeeListPage() {
                       >
                         <LuEye size={18} />
                       </button>
+
                       <button
                         className="icon-btn"
                         title="Edit"
@@ -158,8 +179,9 @@ function EmployeeListPage() {
                       >
                         <LuPencil size={18} />
                       </button>
+
                       <button
-                        className="icon-btn "
+                        className="icon-btn"
                         title="Delete"
                         onClick={() => openDeleteModal(emp)}
                       >
@@ -168,9 +190,8 @@ function EmployeeListPage() {
                     </td>
                   </tr>
                 ))}
-              </tbody>
-            </table>
-          )}
+            </tbody>
+          </table>
         </section>
 
         {showDeleteModal && (

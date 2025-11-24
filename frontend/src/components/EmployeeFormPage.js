@@ -218,7 +218,7 @@ function EmployeeFormPage({ mode }) {
                     <option value="HR">HR</option>
                     <option value="Engineering">Engineering</option>
                     <option value="Sales">Sales</option>
-                    <option value="Finance">Design</option>
+                    <option value="Design">Design</option>
                   </select>
                 </label>
 
@@ -232,7 +232,7 @@ function EmployeeFormPage({ mode }) {
                   >
                     <option value="">Select designation</option>
                     <option value="Developer">Developer</option>
-                    <option value="Team Lead">Design Lead</option>
+                    <option value="Design Lead">Design Lead</option>
                     <option value="Manager">Manager</option>
                   </select>
                 </label>

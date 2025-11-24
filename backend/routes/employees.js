@@ -63,7 +63,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST /api/employees  (create with optional photo)
+// POST /api/employees  
 router.post('/', upload.single('photo'), async (req, res) => {
   try {
     const {
@@ -117,7 +117,7 @@ router.put('/:id', upload.single('photo'), async (req, res) => {
       status,
     } = req.body;
 
-    // keep old photo if we didn't upload a new one
+    
     const [oldRows] = await pool.query(
       'SELECT photo FROM employees WHERE id = ?',
       [req.params.id]
